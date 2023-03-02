@@ -14,12 +14,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class Imagenpanel extends JPanel {
-
+    
+    String directorioRaiz;
     private final JTextArea area1;
     private final JButton BotonEncriptar;
     private final JButton BotonDesencriptar;
@@ -28,6 +28,21 @@ public class Imagenpanel extends JPanel {
     private final JTextArea area2;
 
     public Imagenpanel() {
+
+        String cad = "";
+        char temp4;
+        directorioRaiz = System.getProperty("user.dir");
+        for (int i = 0; i < directorioRaiz.length(); i++) {
+            temp4 = directorioRaiz.charAt(i);
+            if (temp4 == 92) {
+                temp4 = 47;
+                cad = cad + temp4;
+            } else {
+                cad = cad + temp4;
+            }
+        }
+        directorioRaiz = cad + "/src/archivos";
+
         setLayout(new FlowLayout());
         area1 = new JTextArea(10, 15);
         add(area1);
@@ -77,8 +92,9 @@ public class Imagenpanel extends JPanel {
             area2.setText(temp);
 
             try {
+
                 String contenido = temp;
-                File file = new File("C:/Users/jonat/Desktop/Semestre 4/Topicos avanzados de programación/Tarea1.1/src/archivos/Texto_cifrado.vge");
+                File file = new File(directorioRaiz + "/Texto_Cifrado.vge");
                 // Si el archivo no existe es creado
                 if (!file.exists()) {
                     file.createNewFile();
@@ -109,7 +125,7 @@ public class Imagenpanel extends JPanel {
 
             try {
                 String contenido = temp;
-                File file = new File("C:/Users/jonat/Desktop/Semestre 4/Topicos avanzados de programación/Tarea1.1/src/archivos/Texto_decifrado.txt");
+                File file = new File(directorioRaiz + "/Texto_decifrado.txt");
                 // Si el archivo no existe es creado
                 if (!file.exists()) {
                     file.createNewFile();
@@ -132,20 +148,21 @@ public class Imagenpanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent event) {
+            
             try {
                 // Apertura del fichero y creacion de BufferedReader para poder
                 // hacer una lectura comoda (disponer del metodo readLine()).
-                archivo = new File("C:/Users/jonat/Desktop/Semestre 4/Topicos avanzados de programación/Tarea1.1/src/archivos/Texto_decifrado.txt");
+                archivo = new File(directorioRaiz + "/Texto_decifrado.txt");
                 fr = new FileReader(archivo);
                 br = new BufferedReader(fr);
 
-                // Lectura del fichero
+                // Lectura del ficheroe
                 String guardar = "";
                 String linea;
                 while ((linea = br.readLine()) != null) {
-                    guardar += " " + linea;
+                    guardar += linea + "\n";
                 }
-                JOptionPane.showMessageDialog(null, guardar);
+                area2.setText(guardar);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -174,7 +191,7 @@ public class Imagenpanel extends JPanel {
             try {
                 // Apertura del fichero y creacion de BufferedReader para poder
                 // hacer una lectura comoda (disponer del metodo readLine()).
-                archivo = new File("C:/Users/jonat/Desktop/Semestre 4/Topicos avanzados de programación/Tarea1.1/src/archivos/Texto_cifrado.vge");
+                archivo = new File(directorioRaiz + "/Texto_Cifrado.vge");
                 fr = new FileReader(archivo);
                 br = new BufferedReader(fr);
 
@@ -182,9 +199,9 @@ public class Imagenpanel extends JPanel {
                 String guardar = "";
                 String linea;
                 while ((linea = br.readLine()) != null) {
-                    guardar += " " + linea;
+                    guardar += linea + "\n";
                 }
-                JOptionPane.showMessageDialog(null, guardar);
+                area2.setText(guardar);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
