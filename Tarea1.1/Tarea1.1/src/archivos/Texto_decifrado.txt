@@ -1,0 +1,6 @@
+La palabra sin codificacion es: 
+Hola
+bienvenido
+a
+mi
+programa
